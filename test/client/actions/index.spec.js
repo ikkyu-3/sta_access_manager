@@ -1,7 +1,7 @@
 // @flow
 import * as actions from "@actions";
 
-describe("actionsのテスト", () => {
+describe("actions.js", () => {
   it("リクエスト開始アクションが作成される ", () => {
     const expectedAction = { type: "REQUEST_START" };
     expect(actions.requestStart()).toEqual(expectedAction);
@@ -12,15 +12,15 @@ describe("actionsのテスト", () => {
     expect(actions.requestEnd()).toEqual(expectedAction);
   });
 
-  it("ID追加アクションが作成される", () => {
-    const id = "00000000000000000000";
-    const expectedAction = { type: "ADD_ID", id };
-    expect(actions.addId(id)).toEqual(expectedAction);
+  it("CARD ID追加アクションが作成される", () => {
+    const cardId = "00000000000000000000";
+    const expectedAction = { type: "ADD_CARD_ID", cardId };
+    expect(actions.addCardId(cardId)).toEqual(expectedAction);
   });
 
-  it("ID削除アクションが作成される", () => {
-    const expectedAction = { type: "REMOVE_ID" };
-    expect(actions.removeId()).toEqual(expectedAction);
+  it("CARD ID削除アクションが作成される", () => {
+    const expectedAction = { type: "REMOVE_CARD_ID" };
+    expect(actions.removeCardId()).toEqual(expectedAction);
   });
 
   it("入退室処理選択アクションが作成される", () => {
@@ -60,15 +60,15 @@ describe("actionsのテスト", () => {
     expect(actions.clearLastName()).toEqual(expectedAction);
   });
 
-  it("メールアドレスの変更アクションが作成される", () => {
-    const mailAddress = "mailAddress";
-    const expectedAction = { type: "CHANGE_MAIL_ADDRESS", mailAddress };
-    expect(actions.changeMailAddress(mailAddress)).toEqual(expectedAction);
+  it("USER IDの変更アクションが作成される", () => {
+    const userId = "0000000000";
+    const expectedAction = { type: "CHANGE_USER_ID", userId };
+    expect(actions.changeUserId(userId)).toEqual(expectedAction);
   });
 
-  it("メールアドレスの初期化アクションが作成される", () => {
-    const expectedAction = { type: "CLEAR_MAIL_ADDRESS" };
-    expect(actions.clearMailAddress()).toEqual(expectedAction);
+  it("USER IDの初期化アクションが作成される", () => {
+    const expectedAction = { type: "CLEAR_USER_ID" };
+    expect(actions.clearUserId()).toEqual(expectedAction);
   });
 
   it("登録ステップ変更アクションが作成される", () => {
@@ -95,12 +95,11 @@ describe("actionsのテスト", () => {
   it("参加者一覧追加アクションが作成される", () => {
     const participant = [
       {
-        id: "id",
-        user: {
-          name: "name",
-          isEntry: true,
-          purpose: "MEET_UP"
-        }
+        userId: "id",
+        name: "name",
+        purpose: "MEET_UP",
+        isEntry: true,
+        entryTime: "entryTime"
       }
     ];
     const expectedAction = { type: "SET_PARTICIPANT", participant };

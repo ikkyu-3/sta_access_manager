@@ -2,10 +2,10 @@
 import type {
   User,
   OnlyTypeAction,
-  AddIdAction,
+  AddCardIdAction,
   ChangeFirstNameAction,
   ChangeLastNameAction,
-  ChangeMailAddressAction,
+  ChangeUserIdAction,
   ChangeRegisterStepAction,
   SetParticipantAction
 } from "@types";
@@ -23,17 +23,17 @@ export function requestEnd(): OnlyTypeAction {
   };
 }
 
-// id
-export function addId(id: string): AddIdAction {
+// cardId
+export function addCardId(cardId: string): AddCardIdAction {
   return {
-    type: "ADD_ID",
-    id
+    type: "ADD_CARD_ID",
+    cardId
   };
 }
 
-export function removeId(): OnlyTypeAction {
+export function removeCardId(): OnlyTypeAction {
   return {
-    type: "REMOVE_ID"
+    type: "REMOVE_CARD_ID"
   };
 }
 
@@ -91,20 +91,18 @@ export function clearLastName(): OnlyTypeAction {
 }
 
 /**
- * Mail Address
+ * User Id
  */
-export function changeMailAddress(
-  mailAddress: string
-): ChangeMailAddressAction {
+export function changeUserId(userId: string): ChangeUserIdAction {
   return {
-    type: "CHANGE_MAIL_ADDRESS",
-    mailAddress
+    type: "CHANGE_USER_ID",
+    userId
   };
 }
 
-export function clearMailAddress(): OnlyTypeAction {
+export function clearUserId(): OnlyTypeAction {
   return {
-    type: "CLEAR_MAIL_ADDRESS"
+    type: "CLEAR_USER_ID"
   };
 }
 

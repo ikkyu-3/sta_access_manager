@@ -6,12 +6,12 @@ import type { Store as ReduxStore, Dispatch as ReduxDispatch } from "redux";
 
 // Api
 export type BASE_API = {|
-  +method: "get" | "post",
+  +method: "get" | "put",
   +path: string
 |};
 
 export type PATH_PARAMETER_API = {|
-  +method: "get",
+  +method: "get" | "put",
   +path: string,
   +substr: string
 |};
@@ -33,36 +33,29 @@ export type Purpose = "MEET_UP" | "WORK" | "STUDY" | "CIRCLE";
 // User
 export type User = {|
   +id: string,
-  +user: {
-    +name: string,
-    +isEntry: boolean,
-    +purpose: Purpose
-  }
+  +name: string,
+  +purpose: Purpose,
+  +isEntry: boolean,
+  +entryTime: string,
+  exitTime: string
 |};
 
 // Request body
 export type RegisterData = {|
-  +id: string,
-  +user: {
-    +mail: string,
-    +name: string
-  }
+  +cardId: string,
+  +name: string,
+  +userId: string
 |};
 
 export type EntryData = {|
-  +id: string,
   +purpose: string
 |};
 
-export type ExitData = {|
-  +id: string
-|};
-
-export type RequestBody = RegisterData | EntryData | ExitData;
+export type RequestBody = RegisterData | EntryData;
 
 export type RequestOptions = {|
   +url: string,
-  +method: "get" | "post",
+  +method: "get" | "put",
   +data?: RequestBody
 |};
 
@@ -163,8 +156,8 @@ export type RegisterInputFormProps = {
   +firstNameError: string,
   +lastNameValue: string,
   +lastNameError: string,
-  +mailAddressValue: string,
-  +mailAddressError: string,
+  +userIdValue: string,
+  +userIdError: string,
   +selectedMenu: () => {},
   +onChangeStep: () => {},
   +unmount: () => {},
@@ -206,11 +199,11 @@ export type TopProps = {
 // State
 export type State = {
   +firstName: string,
-  +id: string,
+  +cardId: string,
   +inputValidationResult: boolean,
   +isConnected: boolean,
   +lastName: string,
-  +mailAddress: string,
+  +userId: string,
   +participant: Array<User>,
   +registerStep: string,
   +selectedMenu: string
@@ -225,22 +218,22 @@ export type OnlyTypeAction = {
   type:
     | "REQUEST_START"
     | "REQUEST_END"
-    | "REMOVE_ID"
+    | "REMOVE_CARD_ID"
     | "SELECT_TOP"
     | "SELECT_REGISTER"
     | "SELECT_PARTICIPANT"
     | "CLEAR_FIRST_NAME"
     | "CLEAR_LAST_NAME"
-    | "CLEAR_MAIL_ADDRESS"
+    | "CLEAR_USER_ID"
     | "CLEAR_REGISTER_STEP"
     | "SHOW_INPUT_VALIDATION_RESULT"
     | "HIDE_INPUT_VALIDATION_RESULT"
     | "REMOVE_PARTICIPANT"
 };
 
-export type AddIdAction = {
-  type: "ADD_ID",
-  +id: string
+export type AddCardIdAction = {
+  type: "ADD_CARD_ID",
+  +cardId: string
 };
 
 export type ChangeFirstNameAction = {
@@ -253,9 +246,9 @@ export type ChangeLastNameAction = {
   +lastName: string
 };
 
-export type ChangeMailAddressAction = {
-  type: "CHANGE_MAIL_ADDRESS",
-  +mailAddress: string
+export type ChangeUserIdAction = {
+  type: "CHANGE_USER_ID",
+  +userId: string
 };
 
 export type ChangeRegisterStepAction = {
@@ -271,10 +264,10 @@ export type SetParticipantAction = {
 export type Action =
   | ReduxInitAction
   | OnlyTypeAction
-  | AddIdAction
+  | AddCardIdAction
   | ChangeFirstNameAction
   | ChangeLastNameAction
-  | ChangeMailAddressAction
+  | ChangeUserIdAction
   | ChangeRegisterStepAction
   | SetParticipantAction;
 
