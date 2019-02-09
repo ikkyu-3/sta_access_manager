@@ -18,10 +18,10 @@ export const getLastNameError = createSelector(
   }
 );
 
-export const getMailAddressError = createSelector(
-  (state: State): string => state.mailAddress,
-  (mailAddress: string): string => {
-    if (mailAddress.length === 0) return "入力してください";
+export const getUserIdError = createSelector(
+  (state: State): string => state.userId,
+  (userId: string): string => {
+    if (userId.length === 0) return "入力してください";
     // TODO: もう少し頑張った入力値チェックを行う
     return "";
   }
@@ -30,9 +30,9 @@ export const getMailAddressError = createSelector(
 export const validateInput = createSelector(
   getFirstNameError,
   getLastNameError,
-  getMailAddressError,
-  (firstNameError, lastNameError, mailAddressError) =>
+  getUserIdError,
+  (firstNameError, lastNameError, userIdError) =>
     firstNameError.length === 0 &&
     lastNameError.length === 0 &&
-    mailAddressError.length === 0
+    userIdError.length === 0
 );
