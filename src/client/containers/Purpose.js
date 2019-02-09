@@ -4,10 +4,10 @@ import type { State, Dispatch } from "@types";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 
-import { requestStart, requestEnd, removeId } from "@actions";
+import { requestStart, requestEnd, removeCardId } from "@actions";
 import Purpose from "@components/Purpose";
 import {
-  API_POST_ENTRY,
+  API_PUT_ENTRY,
   TOP_PATH,
   COMPLETION_ENTRANCE_PATH,
   ERROR_BAD_REQUEST_PATH,
@@ -26,7 +26,7 @@ const mapStateToProps = (state: State) => ({ state });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatch,
   removeId: () => {
-    dispatch(removeId());
+    dispatch(removeCardId());
   }
 });
 
@@ -48,9 +48,9 @@ const getPurpose = (purpose: string): string => {
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
   ...dispatchProps,
   ...ownProps,
-  checkId: () => {
-    if (!/^[0-9a-f]{16}$/.test(stateProps.state.id)) {
-      dispatchProps.dispatch(removeId());
+  checkCardId: () => {
+    if (!/^[0-9a-f]{16}$/.test(stateProps.state.cardId)) {
+      dispatchProps.dispatch(removeCardId());
       dispatchProps.dispatch(push(TOP_PATH));
     }
   },
@@ -62,12 +62,12 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     const purpose = getPurpose(e.target.id);
     if (purpose === UNKNOWN) return;
 
-    const { id } = stateProps.state;
+    const { cardId } = stateProps.state;
 
     const { dispatch } = dispatchProps;
-    const { method, path } = API_POST_ENTRY;
-    const url = createApiUrl(path);
-    const data = { id, purpose };
+    const { method, path, substr } = API_PUT_ENTRY;
+    const url = createApiUrl(path, { substr, newstr: cardId });
+    const data = { purpose };
 
     // 通信処理
     try {

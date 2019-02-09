@@ -4,20 +4,20 @@ import type { Dispatch } from "@types";
 import { connect } from "react-redux";
 import {
   selectTop,
-  removeId,
+  removeCardId,
   clearFirstName,
   clearLastName,
-  clearMailAddress,
+  clearUserId,
   hideInputValidationResult
 } from "@actions";
 import Top from "@components/Top";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refresh: () => {
-    dispatch(removeId());
+    dispatch(removeCardId());
     dispatch(clearFirstName());
     dispatch(clearLastName());
-    dispatch(clearMailAddress());
+    dispatch(clearUserId());
     dispatch(hideInputValidationResult());
   },
   selectedMenu: () => {

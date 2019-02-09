@@ -8,7 +8,7 @@ import InputForm from "@components/Register/InputForm";
 import {
   changeFirstName,
   changeLastName,
-  changeMailAddress,
+  changeUserId,
   changeRegisterStep,
   clearRegisterStep,
   selectRegister,
@@ -19,7 +19,7 @@ import { REGISTER_SCAN_PATH, INPUT } from "@constants";
 import {
   getFirstNameError,
   getLastNameError,
-  getMailAddressError,
+  getUserIdError,
   validateInput
 } from "@selectors";
 
@@ -28,8 +28,8 @@ const mapStateToProps = (state: State) => ({
   firstNameError: getFirstNameError(state),
   lastNameValue: state.lastName,
   lastNameError: getLastNameError(state),
-  mailAddressValue: state.mailAddress,
-  mailAddressError: getMailAddressError(state),
+  userIdValue: state.userId,
+  userIdError: getUserIdError(state),
   validateInput: validateInput(state),
   canShow: state.inputValidationResult
 });
@@ -52,8 +52,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onChangeLastName: (e: SyntheticInputEvent<HTMLInputElement>) => {
     dispatch(changeLastName(e.target.value));
   },
-  onChangeMailAddress: (e: SyntheticInputEvent<HTMLInputElement>) => {
-    dispatch(changeMailAddress(e.target.value));
+  onChangeUserId: (e: SyntheticInputEvent<HTMLInputElement>) => {
+    dispatch(changeUserId(e.target.value));
   },
   onClickNextButton: () => {
     dispatch(showInputValidationResult());

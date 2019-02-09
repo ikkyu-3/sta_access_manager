@@ -8,20 +8,16 @@ import {
   selectParticipant,
   requestStart,
   requestEnd,
-  removeId,
+  removeCardId,
   clearFirstName,
   clearLastName,
-  clearMailAddress,
+  clearUserId,
   hideInputValidationResult,
   setParticipantAction,
   removeParticipant
 } from "@actions";
 import Participant from "@components/Participant";
-import {
-  API_GET_USERS,
-  ERROR_BAD_REQUEST_PATH,
-  ERROR_INTERNAL_SERVER_ERROR_PAHT
-} from "@constants";
+import { API_GET_USERS, ERROR_BAD_REQUEST_PATH } from "@constants";
 import request from "@modules/request";
 import createApiUrl from "@modules/createApiUrl";
 
@@ -31,10 +27,10 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refresh: () => {
-    dispatch(removeId());
+    dispatch(removeCardId());
     dispatch(clearFirstName());
     dispatch(clearLastName());
-    dispatch(clearMailAddress());
+    dispatch(clearUserId());
     dispatch(hideInputValidationResult());
   },
   selectedMenu: () => {
@@ -43,25 +39,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   getParticipant: async () => {
     const { method, path } = API_GET_USERS;
     const url: string = createApiUrl(path);
-    try {
-      dispatch(push(requestStart()));
-      const res = await request({ url, method });
-      dispatch(push(requestEnd()));
-      // TODO: スキーマチェック
-      if (res.data) {
-        dispatch(setParticipantAction(res.data));
-      } else {
-        dispatch(removeParticipant());
-        dispatch(push(ERROR_BAD_REQUEST_PATH));
-      }
-    } catch (e) {
-      dispatch(push(requestEnd()));
+    dispatch(push(requestStart()));
+    const res = await request({ url, method });
+    dispatch(push(requestEnd()));
+    // TODO: スキーマチェック
+    if (Array.isArray(res.data)) {
+      dispatch(setParticipantAction(res.data));
+    } else {
       dispatch(removeParticipant());
-      if (e.statusCode === 500) {
-        dispatch(push(ERROR_INTERNAL_SERVER_ERROR_PAHT));
-      } else {
-        dispatch(push(ERROR_BAD_REQUEST_PATH));
-      }
+      dispatch(push(ERROR_BAD_REQUEST_PATH));
     }
   }
 });
