@@ -75,3 +75,6 @@ typings/
 
 # flow-typed
 flow-typed/
+
+# pyenv-virtualenv
+.python-version
