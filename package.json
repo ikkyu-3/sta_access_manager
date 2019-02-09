@@ -7,13 +7,11 @@
     "start":
       "npm run start:client & npm run start:server && node ./server/server.js",
     "start:client": "NODE_ENV=development webpack-dev-server --hot",
-    "start:server":
+    "build:server":
       "babel src/server/index.js -o server/index.js -s && babel src/server/modules --out-dir server/modules --source-maps",
-    "flow-typed": "flow-typed install",
     "build:client": "NODE_ENV=development webpack",
-    "flow": "flow",
-    "test": "jest",
-    "storybook": "start-storybook -p 9001 -c ./src/client/components/storybook"
+    "storybook": "start-storybook -p 9001 -c ./src/client/components/storybook",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -71,7 +69,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
-    "flow-bin": " ^0.81.0",
+    "flow-bin": " ^0.92.1",
     "flow-typed": "^2.5.1",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^1.0.0-rc.2",
@@ -83,13 +81,13 @@
     "prettier": "1.12.1",
     "react-test-renderer": "^16.6.3",
     "style-loader": "^0.19.1",
-    "webpack": "^4.2.0",
-    "webpack-cli": "^2.0.13",
-    "webpack-dev-server": "^3.1.1"
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run flow && lint-staged"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
