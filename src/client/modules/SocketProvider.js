@@ -9,11 +9,11 @@ import io from "socket.io-client";
 import {
   requestStart,
   requestEnd,
-  addId,
-  removeId,
+  addCardId,
+  removeCardId,
   clearFirstName,
   clearLastName,
-  clearMailAddress
+  clearUserId
 } from "@actions";
 import request from "@modules/request";
 import createApiUrl from "@modules/createApiUrl";
@@ -25,11 +25,12 @@ import {
   REGISTER_SUCCESS_PATH,
   REGISTER_FAILURE_PATH,
   COMPLETION_EXIT_PATH,
+  ERROR_NOT_FOUND_PATH,
   ERROR_BAD_REQUEST_PATH,
   ERROR_INTERNAL_SERVER_ERROR_PAHT,
-  API_GET_USER_STATE,
-  API_POST_REGISTER,
-  API_POST_EXIT
+  API_GET_USER,
+  API_PUT_USER,
+  API_PUT_EXIT
 } from "@constants";
 
 /**
@@ -55,11 +56,11 @@ class SocketProvider {
     this.socket.on("scan", this.scan.bind(this));
   }
 
-  scan(id: string): void {
-    if (!this.canExecuteScan(id)) return;
+  scan(cardId: string): void {
+    if (!this.canExecuteScan(cardId)) return;
 
-    this.socket.emit("sound", id);
-    this.store.dispatch(addId(id));
+    this.socket.emit("sound", cardId);
+    this.store.dispatch(addCardId(cardId));
 
     const { pathname } = window.location;
     if (pathname === TOP_PATH) {
@@ -73,31 +74,35 @@ class SocketProvider {
    * ユーザーの状態を取得
    */
   async getUserState(): Promise<void> {
-    const { id } = this.store.getState();
-    const { method, path, substr } = API_GET_USER_STATE;
-    const options: CreateApiUrlOptions = { substr, newstr: id };
+    const { cardId } = this.store.getState();
+    const { method, path, substr } = API_GET_USER;
+    const options: CreateApiUrlOptions = { substr, newstr: cardId };
     const url: string = createApiUrl(path, options);
 
-    try {
-      this.store.dispatch(requestStart());
-      const res = await request({ url, method });
-      this.store.dispatch(requestEnd());
+    this.store.dispatch(requestStart());
+    const res = await request({ url, method });
+    this.store.dispatch(requestEnd());
 
-      if (!res.data || !res.data.user) {
-        // データエラー
-        this.store.dispatch(removeId());
-        this.store.dispatch(push(ERROR_BAD_REQUEST_PATH));
-      } else if (res.data.user.isEntry) {
+    if (res.status === 200) {
+      if (res.data.isEntry) {
         // 退出
         await this.postExit();
       } else {
         // 目的選択
         this.store.dispatch(push(PURPOSE_PATH));
       }
-    } catch (error) {
-      this.store.dispatch(requestEnd());
-      this.store.dispatch(removeId());
-      this.catchError(error);
+    } else if (res.status === 404) {
+      if (res.data.exists) {
+        // 目的選択
+        this.store.dispatch(push(PURPOSE_PATH));
+      } else {
+        // 未登録
+        this.store.dispatch(push(ERROR_NOT_FOUND_PATH));
+      }
+    } else {
+      // エラー
+      this.store.dispatch(removeCardId());
+      this.catchError(res);
     }
   }
 
@@ -105,22 +110,21 @@ class SocketProvider {
    * 退出リクエスト
    */
   async postExit(): Promise<void> {
-    const { id } = this.store.getState();
-    const { method, path } = API_POST_EXIT;
-    const data = { id };
-    const url: string = createApiUrl(path);
+    const { cardId } = this.store.getState();
+    const { method, path, substr } = API_PUT_EXIT;
+    const options: CreateApiUrlOptions = { substr, newstr: cardId };
+    const url: string = createApiUrl(path, options);
 
-    try {
-      this.store.dispatch(requestStart());
-      await request({ url, method, data });
-      this.store.dispatch(requestEnd());
+    this.store.dispatch(requestStart());
+    const res = await request({ url, method });
+    this.store.dispatch(requestEnd());
 
-      this.store.dispatch(removeId());
+    if (res.status === 200) {
+      this.store.dispatch(removeCardId());
       this.store.dispatch(push(COMPLETION_EXIT_PATH));
-    } catch (error) {
-      this.store.dispatch(requestEnd());
-      this.store.dispatch(removeId());
-      this.catchError(error);
+    } else {
+      this.store.dispatch(removeCardId());
+      this.catchError(res);
     }
   }
 
@@ -130,16 +134,13 @@ class SocketProvider {
   async postUser(): Promise<void> {
     this.store.dispatch(push(REGISTER_REGISTRATION_IN_PATH));
 
-    const { method, path } = API_POST_REGISTER;
+    const { method, path } = API_PUT_USER;
     const url: string = createApiUrl(path);
-    const { id, firstName, lastName, mailAddress } = this.store.getState();
-    const domain = process.env.MAIL_DOMAIN || "";
+    const { cardId, firstName, lastName, userId } = this.store.getState();
     const data = {
-      id,
-      user: {
-        mail: `${mailAddress}@${domain}`,
-        name: `${lastName} ${firstName}`
-      }
+      cardId,
+      name: `${lastName} ${firstName}`,
+      userId
     };
 
     try {
@@ -156,7 +157,7 @@ class SocketProvider {
     // 初期化
     this.store.dispatch(clearFirstName());
     this.store.dispatch(clearLastName());
-    this.store.dispatch(clearMailAddress());
+    this.store.dispatch(clearUserId());
   }
 
   /**

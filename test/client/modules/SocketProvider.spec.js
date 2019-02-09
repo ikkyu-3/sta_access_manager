@@ -11,6 +11,7 @@ import {
   REGISTER_SUCCESS_PATH,
   REGISTER_FAILURE_PATH,
   COMPLETION_EXIT_PATH,
+  ERROR_NOT_FOUND_PATH,
   ERROR_BAD_REQUEST_PATH,
   ERROR_INTERNAL_SERVER_ERROR_PAHT
 } from "@constants";
@@ -33,10 +34,10 @@ io.mockReturnValue(socketMock);
 const storeMock = {};
 const dispatchMock = jest.fn();
 const getStateMock = jest.fn().mockReturnValue({
-  id: "1234567890",
+  cardId: "1234567890",
   firstName: "firstName",
   lastName: "lastName",
-  mailAddress: "test",
+  userId: "userId",
   isConnected: false
 });
 storeMock.dispatch = dispatchMock;
@@ -44,7 +45,7 @@ storeMock.getState = getStateMock;
 
 createApiUrl.mockReturnValue("http://test.exsample.com/hoge");
 
-describe("modules/SocketProvider.jsのテスト", () => {
+describe("modules/SocketProvider.js", () => {
   let socketProvider;
 
   beforeAll(() => {
@@ -100,7 +101,7 @@ describe("modules/SocketProvider.jsのテスト", () => {
 
       window.history.replaceState({}, "top", TOP_PATH);
 
-      socketProvider.scan("id");
+      socketProvider.scan("cardId");
     });
 
     afterAll(() => {
@@ -113,15 +114,18 @@ describe("modules/SocketProvider.jsのテスト", () => {
     });
 
     it("canExecuteScanを実行する", () => {
-      expect(canExecuteScanSpy).toBeCalledWith("id");
+      expect(canExecuteScanSpy).toBeCalledWith("cardId");
     });
 
     it("socket.emitを実行する", () => {
-      expect(emitMock).toBeCalledWith("sound", "id");
+      expect(emitMock).toBeCalledWith("sound", "cardId");
     });
 
-    it("Id追加Actionをdispatchする", () => {
-      expect(dispatchMock).toBeCalledWith({ id: "id", type: "ADD_ID" });
+    it("CardId追加Actionをdispatchする", () => {
+      expect(dispatchMock).toBeCalledWith({
+        cardId: "cardId",
+        type: "ADD_CARD_ID"
+      });
     });
 
     it("現在のPATHがTOP_PATHの時、ユーザーステータスを取得する", () => {
@@ -135,7 +139,7 @@ describe("modules/SocketProvider.jsのテスト", () => {
 
       window.history.replaceState({}, "REGISTER_SCAN", REGISTER_SCAN_PATH);
 
-      socketProvider.scan("id");
+      socketProvider.scan("cardId");
 
       expect(getUserStateSpy).not.toBeCalled();
       expect(postUserSpy).toBeCalled();
@@ -147,7 +151,7 @@ describe("modules/SocketProvider.jsのテスト", () => {
 
       window.history.replaceState({}, "TEST", "/test");
 
-      socketProvider.scan("id");
+      socketProvider.scan("cardId");
 
       expect(getUserStateSpy).not.toBeCalled();
       expect(postUserSpy).not.toBeCalled();
@@ -160,38 +164,58 @@ describe("modules/SocketProvider.jsのテスト", () => {
 
     beforeAll(async () => {
       request
-        // 入室していない時
+        // 登録していない
         .mockReturnValueOnce(
           new Promise(resolve =>
             resolve({
+              status: 404,
               data: {
-                user: { isEntry: false }
+                exists: false
               }
             })
           )
         )
-        // 入室している時
+        // 入室していない
         .mockReturnValueOnce(
           new Promise(resolve =>
             resolve({
+              status: 404,
               data: {
-                user: { isEntry: true }
+                exists: true
+              }
+            })
+          )
+        )
+        // 退出している
+        .mockReturnValueOnce(
+          new Promise(resolve =>
+            resolve({
+              status: 200,
+              data: {
+                isEntry: false
+              }
+            })
+          )
+        )
+        // 入室している
+        .mockReturnValueOnce(
+          new Promise(resolve =>
+            resolve({
+              status: 200,
+              data: {
+                isEntry: true
               }
             })
           )
         )
         // Bad Response その1
-        .mockReturnValueOnce(new Promise(resolve => resolve({})))
-        // Bad Response その2
         .mockReturnValueOnce(
           new Promise(resolve =>
             resolve({
-              data: {}
+              status: 400
             })
           )
-        )
-        // Error
-        .mockReturnValueOnce(new Promise((_, reject) => reject("error")));
+        );
 
       postExitSpy = jest
         .spyOn(SocketProvider.prototype, "postExit")
@@ -221,14 +245,14 @@ describe("modules/SocketProvider.jsのテスト", () => {
 
     it("createApiUrlを実行する", () => {
       const [[path, options]] = createApiUrl.mock.calls;
-      expect(path).toBe("/user/:id/status");
+      expect(path).toBe("/user/:cardId");
       expect(options).toEqual({
         newstr: "1234567890",
-        substr: ":id"
+        substr: ":cardId"
       });
     });
 
-    it("ユーザーのステータスを取得するリクエストを送る", () => {
+    it("CardIdに該当するユーザの入退室情報を取得するリクエストを送る", () => {
       const [[first], [second]] = dispatchMock.mock.calls;
       expect(first).toEqual({ type: "REQUEST_START" });
       expect(second).toEqual({ type: "REQUEST_END" });
@@ -238,48 +262,42 @@ describe("modules/SocketProvider.jsのテスト", () => {
       });
     });
 
-    it("取得したユーザーが入室していない時、「目的選択画面」に遷移する", () => {
+    it("登録されていないCardIdの時、「ユーザ未登録画面」に遷移する", () => {
+      const [, , [third]] = dispatchMock.mock.calls;
+      expect(third.payload.args[0]).toBe(ERROR_NOT_FOUND_PATH);
+    });
+
+    it("入退室記録がないCardIdの時、「目的選択画面」に遷移する", async () => {
+      dispatchMock.mockClear();
+      await socketProvider.getUserState();
+
+      const [, , [third]] = dispatchMock.mock.calls;
+      expect(third.payload.args[0]).toBe(PURPOSE_PATH);
+    });
+
+    it("一度退室しているCardIdの時、「目的選択画面」に遷移する", async () => {
+      dispatchMock.mockClear();
+      await socketProvider.getUserState();
+
       const [, , [third]] = dispatchMock.mock.calls;
       expect(third.payload.args[0]).toBe(PURPOSE_PATH);
     });
 
     it("取得したユーザーが入室してた時、退出処理を実行する", async () => {
       postExitSpy.mockClear();
-
       await socketProvider.getUserState();
 
       expect(postExitSpy).toBeCalled();
     });
 
-    it("取得したユーザーデータが不正の場合、「BAD REQUEST画面」に遷移する", async () => {
-      dispatchMock.mockClear();
-
-      await socketProvider.getUserState();
-
-      let [, , [third], [fourth]] = dispatchMock.mock.calls;
-
-      expect(third).toEqual({ type: "REMOVE_ID" });
-      expect(fourth.payload.args[0]).toBe(ERROR_BAD_REQUEST_PATH);
-
+    it("パラメータが不正の時、「BAD REQUEST画面」に遷移する", async () => {
       dispatchMock.mockClear();
       await socketProvider.getUserState();
 
-      [, , [third], [fourth]] = dispatchMock.mock.calls;
+      const [, , [third]] = dispatchMock.mock.calls;
 
-      expect(third).toEqual({ type: "REMOVE_ID" });
-      expect(fourth.payload.args[0]).toBe(ERROR_BAD_REQUEST_PATH);
-    });
-
-    it("リクエストでエラーが発生した時、エラー処理を行う", async () => {
-      dispatchMock.mockClear();
-
-      await socketProvider.getUserState();
-
-      const [, [second], [third]] = dispatchMock.mock.calls;
-
-      expect(second).toEqual({ type: "REQUEST_END" });
-      expect(third).toEqual({ type: "REMOVE_ID" });
-      expect(catchErrorSpy).toBeCalledWith("error");
+      expect(third).toEqual({ type: "REMOVE_CARD_ID" });
+      expect(catchErrorSpy).toBeCalledWith({ status: 400 });
     });
   });
 
@@ -288,8 +306,20 @@ describe("modules/SocketProvider.jsのテスト", () => {
 
     beforeAll(async () => {
       request
-        .mockReturnValueOnce(new Promise(resolve => resolve()))
-        .mockReturnValueOnce(new Promise((_, reject) => reject("error")));
+        .mockReturnValueOnce(
+          new Promise(resolve =>
+            resolve({
+              status: 200
+            })
+          )
+        )
+        .mockReturnValueOnce(
+          new Promise(resolve =>
+            resolve({
+              status: 400
+            })
+          )
+        );
 
       catchErrorSpy = jest
         .spyOn(SocketProvider.prototype, "catchError")
@@ -315,7 +345,7 @@ describe("modules/SocketProvider.jsのテスト", () => {
 
     it("createApiUrlを実行する", () => {
       const [[path]] = createApiUrl.mock.calls;
-      expect(path).toBe("/exit");
+      expect(path).toBe("/user/:cardId/exit");
     });
 
     it("退出リクエストを送る", () => {
@@ -323,16 +353,15 @@ describe("modules/SocketProvider.jsのテスト", () => {
 
       expect(first).toEqual({ type: "REQUEST_START" });
       expect(request).toBeCalledWith({
-        data: { id: "1234567890" },
         url: "http://test.exsample.com/hoge",
-        method: "post"
+        method: "put"
       });
       expect(second).toEqual({ type: "REQUEST_END" });
     });
 
     it("正常に処理ができたら、「退出完了画面」に遷移する", () => {
       const [, , [third], [fourth]] = dispatchMock.mock.calls;
-      expect(third).toEqual({ type: "REMOVE_ID" });
+      expect(third).toEqual({ type: "REMOVE_CARD_ID" });
       expect(fourth.payload.args[0]).toBe(COMPLETION_EXIT_PATH);
     });
 
@@ -341,11 +370,10 @@ describe("modules/SocketProvider.jsのテスト", () => {
 
       await socketProvider.postExit();
 
-      const [, [second], [third]] = dispatchMock.mock.calls;
+      const [, , [third]] = dispatchMock.mock.calls;
 
-      expect(second).toEqual({ type: "REQUEST_END" });
-      expect(third).toEqual({ type: "REMOVE_ID" });
-      expect(catchErrorSpy).toBeCalledWith("error");
+      expect(third).toEqual({ type: "REMOVE_CARD_ID" });
+      expect(catchErrorSpy).toBeCalledWith({ status: 400 });
     });
   });
 
@@ -376,7 +404,7 @@ describe("modules/SocketProvider.jsのテスト", () => {
 
     it("createApiUrlを実行する", () => {
       const [[path]] = createApiUrl.mock.calls;
-      expect(path).toBe("/register");
+      expect(path).toBe("/user");
     });
 
     it("store.getStateを実行する", () => {
@@ -388,13 +416,11 @@ describe("modules/SocketProvider.jsのテスト", () => {
       expect(second).toEqual({ type: "REQUEST_START" });
       expect(request.mock.calls[0][0]).toEqual({
         url: "http://test.exsample.com/hoge",
-        method: "post",
+        method: "put",
         data: {
-          id: "1234567890",
-          user: {
-            mail: "test@example.com",
-            name: "lastName firstName"
-          }
+          cardId: "1234567890",
+          name: "lastName firstName",
+          userId: "userId"
         }
       });
       expect(third).toEqual({ type: "REQUEST_END" });
@@ -409,7 +435,7 @@ describe("modules/SocketProvider.jsのテスト", () => {
       const [, , , , [fifth], [sixth], [seventh]] = dispatchMock.mock.calls;
       expect(fifth).toEqual({ type: "CLEAR_FIRST_NAME" });
       expect(sixth).toEqual({ type: "CLEAR_LAST_NAME" });
-      expect(seventh).toEqual({ type: "CLEAR_MAIL_ADDRESS" });
+      expect(seventh).toEqual({ type: "CLEAR_USER_ID" });
     });
 
     it("ユーザー登録に失敗したら、「登録失敗画面」に遷移する", async () => {
@@ -431,7 +457,7 @@ describe("modules/SocketProvider.jsのテスト", () => {
       expect(fourth.payload.args[0]).toBe(REGISTER_FAILURE_PATH);
       expect(fifth).toEqual({ type: "CLEAR_FIRST_NAME" });
       expect(sixth).toEqual({ type: "CLEAR_LAST_NAME" });
-      expect(seventh).toEqual({ type: "CLEAR_MAIL_ADDRESS" });
+      expect(seventh).toEqual({ type: "CLEAR_USER_ID" });
     });
   });
 
