@@ -1,0 +1,17 @@
+@charset "utf-8";
+.top {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.label {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 20px;
+  font-weight: normal;
+}

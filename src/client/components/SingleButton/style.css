@@ -1,0 +1,31 @@
+@charset "utf-8";
+.singleButton {
+  position: absolute;
+  width: 100%;
+  height: 70px;
+  bottom: 0;
+}
+
+.singleButton > button {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.singleButton > button:focus {
+  outline: none;
+}
+
+.default {
+  background-color: #00bcd4;
+  color: whitesmoke;
+}
+
+.next {
+  background-color: orange;
+  color: whitesmoke;
+}

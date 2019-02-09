@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Participant.Purpose.jsxのテスト スナップショット 正しいレンダリング 1`] = `
+<div
+  className="columnPurpose border study"
+>
+  自習
+</div>
+`;

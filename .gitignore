@@ -1,3 +1,6 @@
+# DS_Store
+.DS_Store
+
 # Logs
 logs
 *.log
@@ -57,3 +60,18 @@ typings/
 # dotenv environment variables file
 .env
 
+# ビルドファイル
+/public/js/bundle.js
+/public/js/bundle.js.map
+/server/**
+!/server/.gitkeep
+
+# 音楽ファイル
+/assets/music/**
+!/assets/music/.gitkeep
+
+# mapファイル
+**/*.js.map
+
+# flow-typed
+flow-typed/

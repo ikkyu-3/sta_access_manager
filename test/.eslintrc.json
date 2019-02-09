@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "flowtype/require-parameter-type": 0,
+    "flowtype/require-return-type": 0,
+    "prefer-promise-reject-errors": 0
+  }
+}

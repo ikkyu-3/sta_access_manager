@@ -1,0 +1,62 @@
+@charset "utf-8";
+.mainFlame {
+  display: flex;
+  position: relative;
+  width: calc(100% - 170px);
+  height: 100%;
+  margin-left: 170px;
+  box-sizing: border-box;
+  padding: 40px;
+}
+
+.main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  color: gray;
+  border: 4px solid lightgray;
+  border-radius: 8px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 4px 1px grey;
+  overflow: hidden;
+}
+
+.main > div {
+  height: 100%;
+}
+
+/* デフォルト背景 */
+.standard {
+  background-color: #90ee90;
+}
+
+/* 仕事 */
+.work {
+  background-color: #bbfeff;
+}
+
+/* 自習 */
+.study {
+  background-color: #bcf3cb;
+}
+
+/* 勉強会 */
+.meetUp {
+  background-color: #f8f189;
+}
+
+/* サークル */
+.circle {
+  background-color: #f4d8f5;
+}
+
+/* 退出 */
+.exit {
+  background-color: #00558f;
+}
+
+/* エラー */
+.error {
+  background-color: #ea0032;
+}

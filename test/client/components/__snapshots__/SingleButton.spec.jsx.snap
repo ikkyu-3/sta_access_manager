@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SingleButton.jsxのテスト スナップショット 正しいレンダリング 1`] = `
+<div
+  className="singleButton"
+>
+  <button
+    className="default"
+    onClick={[Function]}
+  >
+    Single Button
+  </button>
+</div>
+`;

@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register/Success.jsxのテスト スナップショット 正しいレンダリング 1`] = `
+<div
+  className="main"
+>
+  <div
+    className="contentWithButton textOnly"
+  >
+    登録しました!!
+  </div>
+  <div
+    className="singleButton"
+  >
+    <button
+      className="next"
+      onClick={[Function]}
+    >
+      入室する
+    </button>
+  </div>
+</div>
+`;

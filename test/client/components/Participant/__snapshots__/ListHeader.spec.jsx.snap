@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Participant.ListHeader.jsxのテスト スナップショット 正しいレンダリング 1`] = `
+<div
+  className="header"
+>
+  <div
+    className="columnName border"
+  >
+    名前
+  </div>
+  <div
+    className="columnPurpose border"
+  >
+    目的
+  </div>
+  <div
+    className="columnStatus"
+  >
+    入退室
+  </div>
+</div>
+`;

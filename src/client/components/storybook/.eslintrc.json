@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "import/no-extraneous-dependencies": 0,
+    "flowtype/require-return-type": 0,
+    "global-require": 0,
+    "flowtype/require-parameter-type": 0,
+    "react/prop-types": 0
+  }
+}

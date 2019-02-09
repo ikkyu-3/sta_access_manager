@@ -1,0 +1,160 @@
+@charset "utf-8";
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+/* header */
+.header {
+  display: table;
+  width: 100%;
+  height: 52px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  border-bottom: 4px solid silver;
+  border-radius: 4px 4px 0px 0px;
+  box-sizing: border-box;
+}
+
+.header > li {
+  display: table-cell;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.header > li > span {
+  display: flex;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  align-items: center;
+}
+
+.active {
+  color: #ea0032;
+}
+
+.disabled {
+  color: lightgray;
+}
+
+/* main */
+.main {
+  width: 100%;
+  height: calc(100% - 52px);
+}
+
+.main > form {
+  width: 100%;
+  height: 100%;
+}
+
+.main .content {
+  width: 100%;
+  height: 100%;
+}
+
+.main .contentWithButton {
+  width: 100%;
+  height: calc(100% - 70px);
+}
+
+/* input */
+.contentWithButton > div {
+  width: 100%;
+  padding: 8px 8px 0px 8px;
+  box-sizing: border-box;
+}
+
+.inputName {
+  display: flex;
+  height: 40%;
+}
+
+.inputName > div {
+  width: 50%;
+}
+
+.inputEmail {
+  position: relative;
+  height: 60%;
+}
+
+.inputArea {
+  height: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.inputArea > label {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+  margin-top: 4px;
+  padding: 8px 16px;
+  font-size: 24px;
+  border-radius: 8px;
+  border: 1px solid lightgray;
+}
+
+.input:focus {
+  outline: none;
+  border-color: orange;
+  box-shadow: 0px 0px 4px 1px orange;
+}
+
+.domain {
+  display: inline-block;
+  font-size: 24px;
+  position: absolute;
+  bottom: 16px;
+  right: 8px;
+}
+
+.bad {
+  border-color: red;
+  box-shadow: 0px 0px 4px 1px reds;
+}
+
+.message {
+  display: inline-block;
+  margin-left: 4px;
+  color: red;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* scan */
+.textOnly {
+  position: relative;
+  padding: 8px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+/* 登録中 */
+.registrationIn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+  font-weight: bold;
+}

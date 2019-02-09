@@ -1,0 +1,19 @@
+[ignore]
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+module.name_mapper='^@actions\(.*\)$' -> '<PROJECT_ROOT>/src/client/actions\1'
+module.name_mapper='^@components\(.*\)$' -> '<PROJECT_ROOT>/src/client/components\1'
+module.name_mapper='^@containers\(.*\)$' -> '<PROJECT_ROOT>/src/client/containers\1'
+module.name_mapper='^@modules\(.*\)$' -> '<PROJECT_ROOT>/src/client/modules\1'
+module.name_mapper='^@reducers\(.*\)$' -> '<PROJECT_ROOT>/src/client/reducers\1'
+module.name_mapper='^@selectors\(.*\)$' -> '<PROJECT_ROOT>/src/client/selectors\1'
+module.name_mapper='^@types\(.*\)$' -> '<PROJECT_ROOT>/src/client/types\1'
+module.name_mapper='^@constants$' -> '<PROJECT_ROOT>/src/client/constants.js'
+
+[strict]

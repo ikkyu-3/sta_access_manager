@@ -1,0 +1,234 @@
+@charset "utf-8";
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+body {
+  display: flex;
+}
+
+/* launch animation */
+.launch {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #f28828;
+  z-index: 1000;
+}
+
+.fade-out {
+  opacity: 1;
+  animation: fade-out 0.3s linear 0s 1 normal forwards;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    z-index: 1000;
+  }
+  99% {
+    opacity: 0;
+    z-index: 1000;
+  }
+  100% {
+    opacity: 0;
+    z-index: -1;
+  }
+}
+
+.load {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: scale(1);
+  opacity: 1;
+  animation: load 0.4s ease 7s 1 normal forwards;
+}
+
+@keyframes load {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.app {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-name {
+  font-size: 35px;
+  font-weight: bold;
+  color: white;
+  opacity: 0;
+  animation: app-name 2.5s ease 0.5s 1 normal forwards;
+}
+
+@keyframes app-name {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.progress {
+  position: absolute;
+  transform: rotate(-90deg) scale(0);
+  animation: progress 0.5s ease-in 3s 1 normal forwards;
+}
+
+@keyframes progress {
+  0% {
+    transform: rotate(-90deg) scale(0);
+  }
+  40% {
+    transform: rotate(-90deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(-90deg) scale(1);
+  }
+}
+
+.progress-value {
+  animation: progress-value 2.5s ease 3.5s 1 normal forwards;
+}
+
+@keyframes progress-value {
+  0% {
+    stroke-dashoffset: 1256;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.loading {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  animation: loading 0.2s ease 6s 1 normal forwards;
+}
+
+@keyframes loading {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.loading-text {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  opacity: 0;
+  animation: loading-text 0.5s ease 3.5s 1 normal forwards;
+}
+
+@keyframes loading-text {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.ok {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0);
+  animation: ok 0.2s ease 6s 1 normal forwards;
+}
+
+@keyframes ok {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.ok-text {
+  font-size: 60px;
+  font-weight: bold;
+  color: white;
+}
+
+.rendering {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  font-weight: bold;
+  color: white;
+  transform: scale(0);
+  opacity: 0;
+  animation: rendering 0.4s ease 7.4s 1 normal forwards;
+}
+
+@keyframes rendering {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.rendering-gif {
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  background-size: contain;
+  margin-left: 10px;
+  /* http://loadergenerator.com/ */
+  background-image: url("../images/load.gif");
+}
+
+/* root */
+#root {
+  position: relative;
+  width: 800px;
+  height: 480px;
+  margin: auto;
+}

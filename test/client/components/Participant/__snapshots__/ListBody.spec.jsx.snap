@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Participant.ListBody.jsxのテスト スナップショット 正しいレンダリング 1`] = `
+<div
+  className="body"
+>
+  <ul>
+    <li
+      className="buttom"
+    >
+      <div
+        className="columnName border"
+      >
+        name1
+      </div>
+      <div
+        className="columnPurpose border "
+      >
+        
+      </div>
+      <div
+        className="columnStatus entry"
+      >
+        入
+      </div>
+    </li>
+    <li
+      className="buttom"
+    >
+      <div
+        className="columnName border"
+      >
+        name2
+      </div>
+      <div
+        className="columnPurpose border "
+      >
+        
+      </div>
+      <div
+        className="columnStatus entry"
+      >
+        入
+      </div>
+    </li>
+    <li
+      className="buttom"
+    >
+      <div
+        className="columnName border"
+      >
+        name3
+      </div>
+      <div
+        className="columnPurpose border "
+      >
+        
+      </div>
+      <div
+        className="columnStatus entry"
+      >
+        入
+      </div>
+    </li>
+    <li
+      className="buttom"
+    >
+      <div
+        className="columnName border"
+      >
+        name4
+      </div>
+      <div
+        className="columnPurpose border "
+      >
+        
+      </div>
+      <div
+        className="columnStatus entry"
+      >
+        入
+      </div>
+    </li>
+    <li
+      className="buttom"
+    >
+      <div
+        className="columnName border"
+      >
+        name5
+      </div>
+      <div
+        className="columnPurpose border "
+      >
+        
+      </div>
+      <div
+        className="columnStatus exit"
+      >
+        退
+      </div>
+    </li>
+  </ul>
+</div>
+`;

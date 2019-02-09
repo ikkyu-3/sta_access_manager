@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Top.jsxのテスト スナップショット 正しいレンダリング 1`] = `
+<div
+  className="top"
+>
+  <div>
+    カードをスキャンして下さい
+  </div>
+  <div
+    className="label"
+  >
+    Created by hr-js
+  </div>
+</div>
+`;

@@ -1,0 +1,99 @@
+{
+  "name": "sta_access_manager",
+  "version": "0.1.0",
+  "description": "入退室管理アプリ",
+  "main": "index.js",
+  "scripts": {
+    "start":
+      "npm run start:client & npm run start:server && node ./server/server.js",
+    "start:client": "NODE_ENV=development webpack-dev-server --hot",
+    "start:server":
+      "babel src/server/index.js -o server/index.js -s && babel src/server/modules --out-dir server/modules --source-maps",
+    "flow-typed": "flow-typed install",
+    "build:client": "NODE_ENV=development webpack",
+    "flow": "flow",
+    "test": "jest",
+    "storybook": "start-storybook -p 9001 -c ./src/client/components/storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hr-js/sta_access_manager.git"
+  },
+  "author": "hr-js",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hr-js/sta_access_manager/issues"
+  },
+  "homepage": "https://github.com/hr-js/sta_access_manager#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "history": "^4.7.2",
+    "node-nfcpy-id": "^0.1.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-hot-loader": "^4.3.3",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.3.1",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "recompose": "^0.30.0",
+    "redux": "^3.7.2",
+    "reselect": "^3.0.1",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4"
+  },
+  "devDependencies": {
+    "@storybook/react": "^3.4.8",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.2",
+    "babel-jest": "^23.0.0-alpha.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "dotenv-webpack": "^1.5.7",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-import-resolver-webpack": "^0.10.1",
+    "eslint-plugin-flowtype": "^2.46.1",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jest": "^21.15.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.7.0",
+    "flow-bin": " ^0.81.0",
+    "flow-typed": "^2.5.1",
+    "html-webpack-plugin": "^3.2.0",
+    "husky": "^1.0.0-rc.2",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^23.5.0",
+    "jest-css-modules": "^1.1.0",
+    "json-server": "^0.12.1",
+    "lint-staged": "^7.0.5",
+    "prettier": "1.12.1",
+    "react-test-renderer": "^16.6.3",
+    "style-loader": "^0.19.1",
+    "webpack": "^4.2.0",
+    "webpack-cli": "^2.0.13",
+    "webpack-dev-server": "^3.1.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run flow && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": ["eslint --fix", "git add"],
+    "*.{css,json,md}": ["prettier --write", "git add"]
+  }
+}

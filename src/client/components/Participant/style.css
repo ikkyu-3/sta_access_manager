@@ -1,0 +1,100 @@
+@charset "utf-8";
+.flame {
+  padding: 8px;
+  background: white;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.list {
+  height: 100%;
+  font-size: 24px;
+}
+
+.list .header {
+  display: flex;
+  height: 60px;
+  font-weight: bold;
+  border: 2px solid lightgray;
+  box-sizing: border-box;
+}
+
+.list .header > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.columnName {
+  flex-grow: 1;
+}
+
+.columnPurpose {
+  width: 130px;
+}
+
+.columnStatus {
+  width: 90px;
+}
+
+.border {
+  border-right: 2px solid lightgray;
+  box-sizing: border-box;
+}
+
+.list .body {
+  height: calc(100% - 60px);
+  border: 2px solid lightgray;
+  border-top: transparent;
+  box-sizing: border-box;
+  overflow: scroll;
+}
+
+.list .body ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list .body li {
+  display: flex;
+  height: 52px;
+}
+
+.list .body li.buttom {
+  border-bottom: 2px solid lightgray;
+}
+
+.list .body li > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 仕事 */
+.work {
+  background-color: #bbfeff;
+}
+
+/* 自習 */
+.study {
+  background-color: #bcf3cb;
+}
+
+/* 勉強会 */
+.meetUp {
+  background-color: #f8f189;
+}
+
+/* サークル */
+.circle {
+  background-color: #f4d8f5;
+}
+
+.entry {
+  background-color: #ffd400;
+}
+
+.exit {
+  background-color: #ebebeb;
+}

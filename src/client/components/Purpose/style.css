@@ -1,0 +1,65 @@
+@charset "utf-8";
+.container {
+  display: grid;
+  position: relative;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.container > button {
+  width: 100%;
+  color: gray;
+  margin: 0;
+  padding: 0;
+  font-size: 28px;
+  font-weight: bold;
+  border: none;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.meetup {
+  border-right: 2px solid lightgray !important;
+  border-bottom: 2px solid lightgray !important;
+  border-radius: 5px 0 0 0;
+  background-color: #f8f189;
+}
+
+.work {
+  border-left: 2px solid lightgray !important;
+  border-bottom: 2px solid lightgray !important;
+  border-radius: 0 5px 0 0;
+  background-color: #bbfeff;
+}
+
+.study {
+  border-right: 2px solid lightgray !important;
+  border-top: 2px solid lightgray !important;
+  border-radius: 0 0 0 5px;
+  background-color: #bcf3cb;
+}
+
+.circle {
+  border-left: 2px solid lightgray !important;
+  border-top: 2px solid lightgray !important;
+  border-radius: 0 0 5px 0;
+  background-color: #f4d8f5;
+}
+
+.message {
+  display: flex;
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  left: calc(50% - 125px);
+  top: calc(50% - 30px);
+  justify-content: center;
+  align-items: center;
+  color: gray;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: white;
+  border: 4px solid lightgray;
+  border-radius: 10px;
+  box-sizing: border-box;
+}

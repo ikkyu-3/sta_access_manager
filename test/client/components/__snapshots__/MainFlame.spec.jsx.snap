@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainFlame.jsxのテスト スナップショット 正しいレンダリング 1`] = `
+<main
+  className="mainFlame standard"
+>
+  <div
+    className="main"
+  >
+    children
+  </div>
+</main>
+`;

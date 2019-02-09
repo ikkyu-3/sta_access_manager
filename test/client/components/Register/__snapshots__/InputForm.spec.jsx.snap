@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register/InputForm.jsxのテスト スナップショット 正しいレンダリング 1`] = `
+<div
+  className="main"
+>
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="contentWithButton"
+    >
+      <div
+        className="inputName"
+      >
+        <div
+          className="inputArea"
+        >
+          <label
+            htmlFor="lastName"
+          >
+            姓
+            <span
+              className="message hidden"
+            >
+              
+            </span>
+            <input
+              className="input"
+              id="lastName"
+              onChange={[Function]}
+              type="text"
+              value="lastName"
+            />
+          </label>
+        </div>
+        <div
+          className="inputArea"
+        >
+          <label
+            htmlFor="firstName"
+          >
+            名
+            <span
+              className="message hidden"
+            >
+              
+            </span>
+            <input
+              className="input"
+              id="firstName"
+              onChange={[Function]}
+              type="text"
+              value="firstName"
+            />
+          </label>
+        </div>
+      </div>
+      <div
+        className="inputEmail"
+      >
+        <div
+          className="inputArea"
+        >
+          <label
+            htmlFor="email"
+          >
+            Email
+            <span
+              className="message hidden"
+            >
+              
+            </span>
+            <input
+              className="input"
+              id="email"
+              onChange={[Function]}
+              type="text"
+              value="email"
+            />
+          </label>
+        </div>
+        <span
+          className="domain"
+        >
+          @
+          exsample.com
+        </span>
+      </div>
+    </div>
+    <div
+      className="singleButton"
+    >
+      <button
+        className="next"
+        onClick={[Function]}
+      >
+        次へ
+      </button>
+    </div>
+  </form>
+</div>
+`;

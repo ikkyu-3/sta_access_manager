@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register/Header.jsxのテスト スナップショット 正しいレンダリング 1`] = `
+<ol
+  className="header"
+>
+  <li
+    className="active"
+  >
+    1. 入力
+    <span>
+      &gt;
+    </span>
+  </li>
+  <li
+    className="disabled"
+  >
+    2. 読取
+    <span>
+      &gt;
+    </span>
+  </li>
+  <li
+    className="disabled"
+  >
+    3. 完了
+  </li>
+</ol>
+`;

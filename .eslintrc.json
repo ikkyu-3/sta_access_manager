@@ -1,0 +1,33 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb",
+    "plugin:jest/recommended",
+    "plugin:flowtype/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["flowtype", "jest"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "import/no-unresolved": 0,
+    "import/extensions": 0
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    },
+    "import/resolver": {
+      "webpack": {
+        "config": {
+          "resolve": {
+            "extensions": [".js", ".jsx"]
+          }
+        }
+      }
+    }
+  }
+}

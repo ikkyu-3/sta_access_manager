@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register/Input.jsxのテスト スナップショット 正しいレンダリング 1`] = `
+<div
+  className="inputArea"
+>
+  <label
+    htmlFor="id"
+  >
+    ラベル
+    <span
+      className="message"
+    >
+      エラー
+    </span>
+    <input
+      className="input bad"
+      id="id"
+      onChange={[Function]}
+      type="text"
+      value="value"
+    />
+  </label>
+</div>
+`;
