@@ -1,15 +1,15 @@
 // @flow
 import reducer from "@reducers";
 
-describe("reducers/index.jsのtest", () => {
+describe("reducers/index.js", () => {
   it("9つのプロパティをもつ", () => {
     const props = [
       "firstName",
-      "id",
+      "cardId",
       "inputValidationResult",
       "isConnected",
       "lastName",
-      "mailAddress",
+      "userId",
       "participant",
       "registerStep",
       "selectedMenu"

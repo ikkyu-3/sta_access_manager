@@ -1,21 +1,21 @@
 // @flow
 import firstName from "./firstName";
-import id from "./id";
+import cardId from "./cardId";
 import inputValidationResult from "./inputValidationResult";
 import isConnected from "./isConnected";
 import lastName from "./lastName";
-import mailAddress from "./mailAddress";
+import userId from "./userId";
 import participant from "./participant";
 import registerStep from "./registerStep";
 import selectedMenu from "./selectedMenu";
 
 export default {
   firstName,
-  id,
+  cardId,
   inputValidationResult,
   isConnected,
   lastName,
-  mailAddress,
+  userId,
   participant,
   registerStep,
   selectedMenu
