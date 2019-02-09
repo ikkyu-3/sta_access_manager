@@ -2,23 +2,29 @@
 import type { BASE_API, PATH_PARAMETER_API, Path } from "@types";
 
 // API
-export const API_POST_REGISTER: BASE_API = {
-  method: "post",
-  path: "/register"
+export const API_PUT_USER: BASE_API = {
+  method: "put",
+  path: "/user"
 };
-export const API_POST_ENTRY: BASE_API = {
-  method: "post",
-  path: "/entry"
-};
-export const API_POST_EXIT: BASE_API = {
-  method: "post",
-  path: "/exit"
-};
-export const API_GET_USER_STATE: PATH_PARAMETER_API = {
+
+export const API_GET_USER: PATH_PARAMETER_API = {
   method: "get",
-  path: "/user/:id/status",
-  substr: ":id"
+  path: "/user/:cardId",
+  substr: ":cardId"
 };
+
+export const API_PUT_ENTRY: PATH_PARAMETER_API = {
+  method: "put",
+  path: "/user/:cardId/entry",
+  substr: ":cardId"
+};
+
+export const API_PUT_EXIT: PATH_PARAMETER_API = {
+  method: "put",
+  path: "/user/:cardId/exit",
+  substr: ":cardId"
+};
+
 export const API_GET_USERS: BASE_API = {
   method: "get",
   path: "/users"
