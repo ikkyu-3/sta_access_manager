@@ -11,6 +11,31 @@ exports[`Register/InputForm.jsxのテスト スナップショット 正しい�
       className="contentWithButton"
     >
       <div
+        className="inputUserId"
+      >
+        <div
+          className="inputArea"
+        >
+          <label
+            htmlFor="userId"
+          >
+            ユーザID
+            <span
+              className="message hidden"
+            >
+              
+            </span>
+            <input
+              className="input"
+              id="userId"
+              onChange={[Function]}
+              type="text"
+              value="userId"
+            />
+          </label>
+        </div>
+      </div>
+      <div
         className="inputName"
       >
         <div
@@ -55,37 +80,6 @@ exports[`Register/InputForm.jsxのテスト スナップショット 正しい�
             />
           </label>
         </div>
-      </div>
-      <div
-        className="inputEmail"
-      >
-        <div
-          className="inputArea"
-        >
-          <label
-            htmlFor="email"
-          >
-            Email
-            <span
-              className="message hidden"
-            >
-              
-            </span>
-            <input
-              className="input"
-              id="email"
-              onChange={[Function]}
-              type="text"
-              value="email"
-            />
-          </label>
-        </div>
-        <span
-          className="domain"
-        >
-          @
-          exsample.com
-        </span>
       </div>
     </div>
     <div

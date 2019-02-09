@@ -25,19 +25,28 @@ class InputForm extends React.Component<RegisterInputFormProps> {
       lastNameValue,
       lastNameError,
       onChangeLastName,
-      mailAddressValue,
-      mailAddressError,
-      onChangeMailAddress,
+      userIdValue,
+      userIdError,
+      onChangeUserId,
       onClickNextButton,
       onSubmitForm
     } = this.props;
-    const { main, inputName, inputEmail, domain, contentWithButton } = styles;
-    const domainName = process.env.MAIL_DOMAIN;
+    const { main, inputName, inputUserId, contentWithButton } = styles;
 
     return (
       <div className={main}>
         <form onSubmit={onSubmitForm}>
           <div className={contentWithButton}>
+            <div className={inputUserId}>
+              <Input
+                id="userId"
+                label="ユーザID"
+                error={userIdError}
+                value={userIdValue}
+                canShow={canShow}
+                onChange={onChangeUserId}
+              />
+            </div>
             <div className={inputName}>
               <Input
                 id="lastName"
@@ -55,17 +64,6 @@ class InputForm extends React.Component<RegisterInputFormProps> {
                 canShow={canShow}
                 onChange={onChangeFirstName}
               />
-            </div>
-            <div className={inputEmail}>
-              <Input
-                id="email"
-                label="Email"
-                error={mailAddressError}
-                value={mailAddressValue}
-                canShow={canShow}
-                onChange={onChangeMailAddress}
-              />
-              <span className={domain}>@{domainName}</span>
             </div>
           </div>
           <SingleButton

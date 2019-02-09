@@ -22,9 +22,9 @@ describe("Register/InputForm.jsxのテスト", () => {
           lastNameValue="lastName"
           lastNameError=""
           onChangeLastName={fn}
-          mailAddressValue="email"
-          mailAddressError=""
-          onChangeMailAddress={fn}
+          userIdValue="userId"
+          userIdError=""
+          onChangeUserId={fn}
           onClickNextButton={fn}
           onSubmitForm={fn}
         />
@@ -53,9 +53,9 @@ describe("Register/InputForm.jsxのテスト", () => {
           lastNameValue="lastName"
           lastNameError=""
           onChangeLastName={fn}
-          mailAddressValue="email"
-          mailAddressError=""
-          onChangeMailAddress={fn}
+          userIdValue="userId"
+          userIdError=""
+          onChangeUserId={fn}
           onClickNextButton={fn}
           onSubmitForm={fn}
         />
@@ -70,10 +70,6 @@ describe("Register/InputForm.jsxのテスト", () => {
     it("componentWillUnmountは、unmountを実行する", () => {
       inputForm.instance().componentWillUnmount();
       expect(unmount).toBeCalled();
-    });
-
-    it("process.env.MAIL_DOMAINに指定した値が、メールアドレスのドメイン名に表示されている", () => {
-      expect(inputForm.find(".domain").text()).toBe(`@${domain}`);
     });
   });
 });

@@ -1,69 +1,62 @@
 export const shortParticipantData = [
   {
-    id: "1",
-    user: {
-      name: "name1",
-      purpose: "study",
-      isEntry: true
-    }
+    userId: "1",
+    name: "name1",
+    purpose: "STUDY",
+    isEntry: true,
+    entryTime: "2019-02-09T15:48:11.302Z"
   },
   {
-    id: "2",
-    user: {
-      name: "name2",
-      purpose: "study",
-      isEntry: true
-    }
+    userId: "2",
+    name: "name2",
+    purpose: "STUDY",
+    isEntry: true,
+    entryTime: "2019-02-09T15:48:11.302Z"
   },
   {
-    id: "3",
-    user: {
-      name: "name3",
-      purpose: "study",
-      isEntry: true
-    }
+    userId: "3",
+    name: "name3",
+    purpose: "STUDY",
+    isEntry: true,
+    entryTime: "2019-02-09T15:48:11.302Z"
   },
   {
-    id: "4",
-    user: {
-      name: "name4",
-      purpose: "study",
-      isEntry: true
-    }
+    userId: "4",
+    name: "name4",
+    purpose: "STUDY",
+    isEntry: true,
+    entryTime: "2019-02-09T15:48:11.302Z"
   },
   {
-    id: "5",
-    user: {
-      name: "name5",
-      purpose: "study",
-      isEntry: false
-    }
+    userId: "5",
+    name: "name5",
+    purpose: "STUDY",
+    isEntry: false,
+    entryTime: "2019-02-09T15:48:11.302Z",
+    exitTime: "2019-02-09T15:48:11.302Z"
   }
 ];
 
 export const longParticipantData = shortParticipantData.concat([
   {
-    id: "6",
-    user: {
-      name: "name6",
-      purpose: "study",
-      isEntry: true
-    }
+    userId: "6",
+    name: "name6",
+    purpose: "STUDY",
+    isEntry: true,
+    entryTime: "2019-02-09T15:48:11.302Z"
   },
   {
-    id: "7",
-    user: {
-      name: "name7",
-      purpose: "study",
-      isEntry: true
-    }
+    userId: "7",
+    name: "name7",
+    purpose: "STUDY",
+    isEntry: true,
+    entryTime: "2019-02-09T15:48:11.302Z"
   },
   {
-    id: "8",
-    user: {
-      name: "name8",
-      purpose: "study",
-      isEntry: true
-    }
+    userId: "8",
+    name: "name8",
+    purpose: "STUDY",
+    isEntry: true,
+    entryTime: "2019-02-09T15:48:11.302Z"
   }
 ]);
