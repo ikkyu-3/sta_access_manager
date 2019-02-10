@@ -9,7 +9,11 @@ describe("Purpose.jsx", () => {
       const fn = () => {};
       const tree = renderer
         .create(
-          <Purpose checkId={fn} removeId={fn} onPurposeButtonClick={fn} />
+          <Purpose
+            checkCardId={fn}
+            removeCardId={fn}
+            onPurposeButtonClick={fn}
+          />
         )
         .toJSON();
       expect(tree).toMatchSnapshot();
@@ -17,16 +21,16 @@ describe("Purpose.jsx", () => {
   });
 
   describe("コンポーネントのテスト", () => {
-    const checkIdMock = jest.fn();
-    const removeIdMock = jest.fn();
+    const checkCardIdMock = jest.fn();
+    const removeCardIdMock = jest.fn();
     const onPurposeButtonClickMock = jest.fn();
     let purpose;
 
     beforeAll(() => {
       purpose = shallow(
         <Purpose
-          checkId={checkIdMock}
-          removeId={removeIdMock}
+          checkCardId={checkCardIdMock}
+          removeCardId={removeCardIdMock}
           onPurposeButtonClick={onPurposeButtonClickMock}
         />
       );
@@ -37,12 +41,12 @@ describe("Purpose.jsx", () => {
     });
 
     it("componentDidMountは、checkIdを実行する", () => {
-      expect(checkIdMock).toBeCalled();
+      expect(checkCardIdMock).toBeCalled();
     });
 
     it("componentWillUnmountは、removeIdを実行する", () => {
       purpose.instance().componentWillUnmount();
-      expect(removeIdMock).toBeCalled();
+      expect(removeCardIdMock).toBeCalled();
     });
 
     it("勉強会をクリックしたら、onPurposeButtonClickが実行される", () => {

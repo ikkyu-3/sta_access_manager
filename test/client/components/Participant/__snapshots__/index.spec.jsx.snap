@@ -39,9 +39,9 @@ exports[`Participantのテスト スナップショット 正しいレンダリ�
             name1
           </div>
           <div
-            className="columnPurpose border "
+            className="columnPurpose border study"
           >
-            
+            自習
           </div>
           <div
             className="columnStatus entry"
@@ -58,9 +58,9 @@ exports[`Participantのテスト スナップショット 正しいレンダリ�
             name2
           </div>
           <div
-            className="columnPurpose border "
+            className="columnPurpose border study"
           >
-            
+            自習
           </div>
           <div
             className="columnStatus entry"
@@ -77,9 +77,9 @@ exports[`Participantのテスト スナップショット 正しいレンダリ�
             name3
           </div>
           <div
-            className="columnPurpose border "
+            className="columnPurpose border study"
           >
-            
+            自習
           </div>
           <div
             className="columnStatus entry"
@@ -96,9 +96,9 @@ exports[`Participantのテスト スナップショット 正しいレンダリ�
             name4
           </div>
           <div
-            className="columnPurpose border "
+            className="columnPurpose border study"
           >
-            
+            自習
           </div>
           <div
             className="columnStatus entry"
@@ -115,9 +115,9 @@ exports[`Participantのテスト スナップショット 正しいレンダリ�
             name5
           </div>
           <div
-            className="columnPurpose border "
+            className="columnPurpose border study"
           >
-            
+            自習
           </div>
           <div
             className="columnStatus exit"

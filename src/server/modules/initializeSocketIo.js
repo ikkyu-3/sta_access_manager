@@ -10,11 +10,17 @@ const nfc = new NfcpyId().start();
 function initializeSocketIo(server: Server) {
   const io: SocketIo.Server = SocketIo(server);
   io.on("connection", (socket: SocketIo.Socket) => {
+    // sound
     socket.on("sound", async id => {
-      // idで音を変更できる
       switch (id) {
+        case "SUCCESS":
+          await exec("mpg321 ./assets/music/decision1.mp3");
+          break;
+        case "ERROR":
+          await exec("mpg321 ./assets/music/warning1.mp3");
+          break;
         default:
-          await exec("mpg321 ./assets/music/xxx.mp3");
+          await exec("mpg321 ./assets/music/warning2.mp3");
           break;
       }
     });

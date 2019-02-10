@@ -1,6 +1,5 @@
 const path = require("path");
 const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
 const mode = process.env.NODE_ENV || "production";
@@ -55,11 +54,7 @@ const config = {
       "@constants": path.resolve(__dirname, "src/client/constants.js")
     }
   },
-  plugins: [
-    new HtmlWebpackPlugin(),
-    new webpack.NamedModulesPlugin(),
-    new Dotenv()
-  ]
+  plugins: [new webpack.NamedModulesPlugin(), new Dotenv()]
 };
 
 module.exports = config;

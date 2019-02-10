@@ -25,7 +25,7 @@ const mapStateToProps = (state: State) => ({ state });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatch,
-  removeId: () => {
+  removeCardId: () => {
     dispatch(removeCardId());
   }
 });

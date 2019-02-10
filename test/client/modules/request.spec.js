@@ -14,14 +14,12 @@ describe("modules/request.jsのテスト", () => {
 
     expect(await request()).toBe("test");
     expect(axiosMock.mock.calls[0][0]).toEqual({
-      headers: { "Access-Control-Allow-Origin": "*" },
       timeout: 5000
     });
     axiosMock.mockClear();
 
     expect(await request({ body: "body" })).toBe("test");
     expect(axiosMock.mock.calls[0][0]).toEqual({
-      headers: { "Access-Control-Allow-Origin": "*" },
       timeout: 5000,
       body: "body"
     });

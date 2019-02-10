@@ -105,7 +105,6 @@ describe("modules/SocketProvider.js", () => {
     });
 
     afterAll(() => {
-      emitMock.mockClear();
       dispatchMock.mockClear();
 
       canExecuteScanSpy.mockRestore();
@@ -115,10 +114,6 @@ describe("modules/SocketProvider.js", () => {
 
     it("canExecuteScanを実行する", () => {
       expect(canExecuteScanSpy).toBeCalledWith("cardId");
-    });
-
-    it("socket.emitを実行する", () => {
-      expect(emitMock).toBeCalledWith("sound", "cardId");
     });
 
     it("CardId追加Actionをdispatchする", () => {
@@ -228,6 +223,7 @@ describe("modules/SocketProvider.js", () => {
     });
 
     afterAll(() => {
+      emitMock.mockClear();
       getStateMock.mockClear();
       dispatchMock.mockClear();
       createApiUrl.mockClear();
@@ -263,39 +259,52 @@ describe("modules/SocketProvider.js", () => {
     });
 
     it("登録されていないCardIdの時、「ユーザ未登録画面」に遷移する", () => {
+      expect(emitMock).toBeCalledWith("sound", "ERROR");
+
       const [, , [third]] = dispatchMock.mock.calls;
       expect(third.payload.args[0]).toBe(ERROR_NOT_FOUND_PATH);
     });
 
     it("入退室記録がないCardIdの時、「目的選択画面」に遷移する", async () => {
+      emitMock.mockClear();
       dispatchMock.mockClear();
       await socketProvider.getUserState();
+
+      expect(emitMock).toBeCalledWith("sound", "SUCCESS");
 
       const [, , [third]] = dispatchMock.mock.calls;
       expect(third.payload.args[0]).toBe(PURPOSE_PATH);
     });
 
     it("一度退室しているCardIdの時、「目的選択画面」に遷移する", async () => {
+      emitMock.mockClear();
       dispatchMock.mockClear();
       await socketProvider.getUserState();
+
+      expect(emitMock).toBeCalledWith("sound", "SUCCESS");
 
       const [, , [third]] = dispatchMock.mock.calls;
       expect(third.payload.args[0]).toBe(PURPOSE_PATH);
     });
 
     it("取得したユーザーが入室してた時、退出処理を実行する", async () => {
+      emitMock.mockClear();
       postExitSpy.mockClear();
       await socketProvider.getUserState();
+
+      expect(emitMock).not.toBeCalled();
 
       expect(postExitSpy).toBeCalled();
     });
 
     it("パラメータが不正の時、「BAD REQUEST画面」に遷移する", async () => {
+      emitMock.mockClear();
       dispatchMock.mockClear();
       await socketProvider.getUserState();
 
-      const [, , [third]] = dispatchMock.mock.calls;
+      expect(emitMock).toBeCalledWith("sound", "ERROR");
 
+      const [, , [third]] = dispatchMock.mock.calls;
       expect(third).toEqual({ type: "REMOVE_CARD_ID" });
       expect(catchErrorSpy).toBeCalledWith({ status: 400 });
     });
@@ -329,6 +338,7 @@ describe("modules/SocketProvider.js", () => {
     });
 
     afterAll(() => {
+      emitMock.mockClear();
       getStateMock.mockClear();
       dispatchMock.mockClear();
       createApiUrl.mockClear();
@@ -360,18 +370,22 @@ describe("modules/SocketProvider.js", () => {
     });
 
     it("正常に処理ができたら、「退出完了画面」に遷移する", () => {
+      expect(emitMock).toBeCalledWith("sound", "SUCCESS");
+
       const [, , [third], [fourth]] = dispatchMock.mock.calls;
       expect(third).toEqual({ type: "REMOVE_CARD_ID" });
       expect(fourth.payload.args[0]).toBe(COMPLETION_EXIT_PATH);
     });
 
     it("リクエストでエラーが発生した時、エラー処理を行う", async () => {
+      emitMock.mockClear();
       dispatchMock.mockClear();
 
       await socketProvider.postExit();
 
-      const [, , [third]] = dispatchMock.mock.calls;
+      expect(emitMock).toBeCalledWith("sound", "ERROR");
 
+      const [, , [third]] = dispatchMock.mock.calls;
       expect(third).toEqual({ type: "REMOVE_CARD_ID" });
       expect(catchErrorSpy).toBeCalledWith({ status: 400 });
     });
@@ -382,9 +396,20 @@ describe("modules/SocketProvider.js", () => {
       process.env.MAIL_DOMAIN = "example.com";
 
       request
-        .mockReturnValueOnce(new Promise(resolve => resolve()))
-        .mockReturnValueOnce(new Promise((_, reject) => reject()));
-
+        .mockReturnValueOnce(
+          new Promise(resolve =>
+            resolve({
+              status: 201
+            })
+          )
+        )
+        .mockReturnValueOnce(
+          new Promise(resolve =>
+            resolve({
+              status: 400
+            })
+          )
+        );
       await socketProvider.postUser();
     });
 
@@ -446,14 +471,13 @@ describe("modules/SocketProvider.js", () => {
       const [
         ,
         ,
-        [third],
+        ,
         [fourth],
         [fifth],
         [sixth],
         [seventh]
       ] = dispatchMock.mock.calls;
 
-      expect(third).toEqual({ type: "REQUEST_END" });
       expect(fourth.payload.args[0]).toBe(REGISTER_FAILURE_PATH);
       expect(fifth).toEqual({ type: "CLEAR_FIRST_NAME" });
       expect(sixth).toEqual({ type: "CLEAR_LAST_NAME" });
@@ -480,7 +504,7 @@ describe("modules/SocketProvider.js", () => {
 
   describe("catchError", () => {
     it("ステータスコードが500の時、「INTERNAL　SERVER　ERROR画面」に遷移する", () => {
-      socketProvider.catchError({ response: { status: 500 } });
+      socketProvider.catchError({ status: 500 });
       const [[first]] = dispatchMock.mock.calls;
       expect(first.payload.args[0]).toBe(ERROR_INTERNAL_SERVER_ERROR_PAHT);
     });

@@ -59,7 +59,6 @@ class SocketProvider {
   scan(cardId: string): void {
     if (!this.canExecuteScan(cardId)) return;
 
-    this.socket.emit("sound", cardId);
     this.store.dispatch(addCardId(cardId));
 
     const { pathname } = window.location;
@@ -89,18 +88,22 @@ class SocketProvider {
         await this.postExit();
       } else {
         // 目的選択
+        this.socket.emit("sound", "SUCCESS");
         this.store.dispatch(push(PURPOSE_PATH));
       }
     } else if (res.status === 404) {
       if (res.data.exists) {
         // 目的選択
+        this.socket.emit("sound", "SUCCESS");
         this.store.dispatch(push(PURPOSE_PATH));
       } else {
         // 未登録
+        this.socket.emit("sound", "ERROR");
         this.store.dispatch(push(ERROR_NOT_FOUND_PATH));
       }
     } else {
       // エラー
+      this.socket.emit("sound", "ERROR");
       this.store.dispatch(removeCardId());
       this.catchError(res);
     }
@@ -120,9 +123,11 @@ class SocketProvider {
     this.store.dispatch(requestEnd());
 
     if (res.status === 200) {
+      this.socket.emit("sound", "SUCCESS");
       this.store.dispatch(removeCardId());
       this.store.dispatch(push(COMPLETION_EXIT_PATH));
     } else {
+      this.socket.emit("sound", "ERROR");
       this.store.dispatch(removeCardId());
       this.catchError(res);
     }
@@ -143,17 +148,18 @@ class SocketProvider {
       userId
     };
 
-    try {
-      this.store.dispatch(requestStart());
-      await request({ url, method, data });
-      this.store.dispatch(requestEnd());
+    this.store.dispatch(requestStart());
+    const res = await request({ url, method, data });
+    this.store.dispatch(requestEnd());
 
+    if (res.status === 201) {
+      this.socket.emit("sound", "SUCCESS");
       this.store.dispatch(push(REGISTER_SUCCESS_PATH));
-    } catch (error) {
-      this.store.dispatch(requestEnd());
-      // TODO: storeの情報が変更が必要かどうか確認
+    } else {
+      this.socket.emit("sound", "ERROR");
       this.store.dispatch(push(REGISTER_FAILURE_PATH));
     }
+
     // 初期化
     this.store.dispatch(clearFirstName());
     this.store.dispatch(clearLastName());
@@ -176,16 +182,13 @@ class SocketProvider {
    */
   catchError(error: $AxiosError<RequestBody>): void {
     const { dispatch }: { dispatch: Dispatch } = this.store;
-
-    if (error.response) {
-      switch (error.response.status) {
-        case 500:
-          dispatch(push(ERROR_INTERNAL_SERVER_ERROR_PAHT));
-          break;
-        default:
-          dispatch(push(ERROR_BAD_REQUEST_PATH));
-          break;
-      }
+    switch (error.status) {
+      case 500:
+        dispatch(push(ERROR_INTERNAL_SERVER_ERROR_PAHT));
+        break;
+      default:
+        dispatch(push(ERROR_BAD_REQUEST_PATH));
+        break;
     }
   }
 }

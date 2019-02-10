@@ -6,11 +6,11 @@ import styles from "./style.css";
 
 class Purpose extends React.Component<PurposeProps> {
   componentDidMount() {
-    this.props.checkId();
+    this.props.checkCardId();
   }
 
   componentWillUnmount() {
-    this.props.removeId();
+    this.props.removeCardId();
   }
 
   render() {
