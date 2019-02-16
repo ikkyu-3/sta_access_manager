@@ -142,10 +142,11 @@ class SocketProvider {
     const { method, path } = API_PUT_USER;
     const url: string = createApiUrl(path);
     const { cardId, firstName, lastName, userId } = this.store.getState();
+
     const data = {
       cardId,
       name: `${lastName} ${firstName}`,
-      userId
+      userId: userId.padStart(10, "0")
     };
 
     this.store.dispatch(requestStart());

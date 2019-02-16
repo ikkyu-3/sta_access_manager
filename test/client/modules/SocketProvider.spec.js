@@ -37,7 +37,7 @@ const getStateMock = jest.fn().mockReturnValue({
   cardId: "1234567890",
   firstName: "firstName",
   lastName: "lastName",
-  userId: "userId",
+  userId: "1",
   isConnected: false
 });
 storeMock.dispatch = dispatchMock;
@@ -445,7 +445,7 @@ describe("modules/SocketProvider.js", () => {
         data: {
           cardId: "1234567890",
           name: "lastName firstName",
-          userId: "userId"
+          userId: "0000000001"
         }
       });
       expect(third).toEqual({ type: "REQUEST_END" });
