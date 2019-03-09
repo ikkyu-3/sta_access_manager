@@ -40,7 +40,7 @@ class InputForm extends React.Component<RegisterInputFormProps> {
             <div className={inputUserId}>
               <Input
                 id="userId"
-                label="ユーザID"
+                label="ユーザID (※数字10字以内)"
                 error={userIdError}
                 value={userIdValue}
                 canShow={canShow}

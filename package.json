@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start":
-      "npm run start:client & npm run start:server && node ./server/server.js",
+      "npm run start:client & npm run build:server && node ./server/index.js",
     "start:client": "NODE_ENV=development webpack-dev-server --hot",
     "build:server":
       "babel src/server/index.js -o server/index.js -s && babel src/server/modules --out-dir server/modules --source-maps",
