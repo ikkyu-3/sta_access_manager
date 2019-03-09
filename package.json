@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start":
-      "npm run build:server && node ./server/index.js & npm run build:client && chromium-browser --new-window --start-fullscreen http://localhost:3000/",
+      "kill $(lsof -t -i:3000) && npm run build:server && node ./server/index.js & npm run build:client && chromium-browser --new-window --start-fullscreen http://localhost:3000/",
     "start:client": "NODE_ENV=development webpack-dev-server --hot",
     "build:server":
       "babel src/server/index.js -o server/index.js -s && babel src/server/modules --out-dir server/modules --source-maps",
