@@ -1,13 +1,12 @@
 // @flow
 import type { $Application } from "express";
 
-import path from "path";
 import http from "http";
 import express from "express";
 import initializeSocketIo from "./modules/initializeSocketIo";
 
 const app: $Application = express();
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
 
 const server: Server = http.createServer(app);
 initializeSocketIo(server);
